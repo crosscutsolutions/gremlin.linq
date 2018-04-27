@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gremlin.Linq", "Gremlin.Linq.csproj", "{1A35A2A2-7662-40A9-8277-1CAB1B2686AC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gremlin.Linq.Tests", "..\Gremlin.Linq.Tests\Gremlin.Linq.Tests.csproj", "{15D50E52-B93D-479B-ABCC-4EF698C19182}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1A35A2A2-7662-40A9-8277-1CAB1B2686AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A35A2A2-7662-40A9-8277-1CAB1B2686AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A35A2A2-7662-40A9-8277-1CAB1B2686AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A35A2A2-7662-40A9-8277-1CAB1B2686AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15D50E52-B93D-479B-ABCC-4EF698C19182}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15D50E52-B93D-479B-ABCC-4EF698C19182}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15D50E52-B93D-479B-ABCC-4EF698C19182}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15D50E52-B93D-479B-ABCC-4EF698C19182}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A540F33E-33B1-48AC-AB49-17473FD87DCB}
+	EndGlobalSection
+EndGlobal

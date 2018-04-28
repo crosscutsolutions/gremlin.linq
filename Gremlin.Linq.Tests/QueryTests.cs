@@ -135,5 +135,38 @@
                 .BuildGremlinQuery();
             Assert.AreEqual("g.addV('User').property('Age', 0).addE('has').to(g.addV('Login')).inV()", q);
         }
+
+        [TestMethod]
+        public void TestWhereWithEqual()
+        {
+            IGraphClient client = new TestGraphClient();
+            var q = client
+                .From<User>()
+                .Where(a => a.FirstName.Equals("kalle"))
+                .BuildGremlinQuery();
+            Assert.AreEqual("g.V().has('label','User').has('FirstName', 'kalle')",q);
+        }
+
+        [TestMethod]
+        public void TestWhereWithMultipleConditions()
+        {
+            IGraphClient client = new TestGraphClient();
+            var q = client
+                .From<User>()
+                .Where(a => a.FirstName.Equals("kalle") && a.LastName=="Sven" && a.Age>3)
+                .BuildGremlinQuery();
+            Assert.AreEqual("g.V().has('label','User').has('FirstName', 'kalle').has('LastName', 'Sven').has('Age', gt(3))",q);
+        }
+
+        [TestMethod]
+        public void TestWhereWithOrStatement()
+        {
+            IGraphClient client = new TestGraphClient();
+            var q = client
+                .From<User>()
+                .Where(a => a.FirstName.Equals("kalle") && (a.LastName == "Sven" || a.Age > 3))
+                .BuildGremlinQuery();
+            Assert.AreEqual("g.V().has('label','User').has('FirstName', 'kalle').has('LastName', 'Sven').has('Age', gt(3))", q);
+        }
     }
 }

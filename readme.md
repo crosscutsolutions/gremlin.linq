@@ -19,6 +19,17 @@ using (var client =  new  GraphClientFactory(config).CreateGremlinGraphClient())
 }
 ```
 
+Your appsettings.json should then look like this.
+```
+{
+  "gremlin": {
+    "url": "yourdb.azure.com",
+    "database": "<databaseName>",
+    "collection": "<collectionName>"
+  }
+}
+```
+
 Adding entities at it's simplest 
 
 ```

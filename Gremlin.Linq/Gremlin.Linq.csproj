@@ -2,6 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <Version>1.0.1</Version>
+    <Authors>Morgan Arvander</Authors>
+    <Company>Crosscut Solutions AB</Company>
+    <Description>Fluent querys for gremlin using lambda expressions</Description>
+    <Copyright>Crosscut Solutions AB</Copyright>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

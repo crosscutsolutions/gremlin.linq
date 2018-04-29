@@ -38,7 +38,8 @@
             where TEntity : new()
         {
             var result = await _gremlinClient.SubmitWithSingleResultAsync<dynamic>(gremlinExpression);
-            return Materialize<TEntity>(result);
+            var materialized = Materialize<TEntity>(result);
+            return materialized as QueryResult<TEntity>;
         }
 
         public async Task SubmitAsync(string gremlinExpression)

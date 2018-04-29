@@ -6,7 +6,7 @@
     {
         public GraphClientSettings(IConfiguration configuration)
         {
-            configuration.Bind("gremlin", this);
+            configuration.Bind("gremlin", this);    
         }
 
         public string Collection { get; set; }

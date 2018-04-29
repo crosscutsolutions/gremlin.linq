@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Threading.Tasks;
     using Net.Driver;
@@ -94,6 +95,15 @@
                 {
                     propertyInfo.GetSetMethod().Invoke(resultEntity,
                         new[] {Convert.ChangeType(storedValue.ToString(), propertyInfo.PropertyType)});
+                }
+                else if (propertyInfo.PropertyType == typeof(DateTime))
+                {
+                    var datetimeStr = storedValue.ToString();
+                    if (DateTime.TryParse(datetimeStr, out var datetime))
+                    {
+                        propertyInfo.GetSetMethod().Invoke(resultEntity,
+                            new object[] {datetime});
+                    }
                 }
                 else if (propertyInfo.PropertyType == typeof(string))
                 {

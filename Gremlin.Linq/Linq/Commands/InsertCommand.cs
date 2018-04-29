@@ -1,5 +1,6 @@
 ﻿namespace Gremlin.Linq.Linq
 {
+    using System;
     using System.Collections;
     using System.Globalization;
     using System.Reflection;
@@ -74,6 +75,12 @@
             if (value == null)
             {
                 return string.Empty;
+            }
+
+            if (value is DateTime)
+            {
+                var val = ((DateTime)value).ToString("s");
+                return $".property('{propertyInfo.Name}', {val})";
             }
 
             if (value is double || value is float)

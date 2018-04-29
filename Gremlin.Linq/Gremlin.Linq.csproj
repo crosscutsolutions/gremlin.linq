@@ -7,6 +7,9 @@
     <Company>Crosscut Solutions AB</Company>
     <Description>Fluent querys for gremlin using lambda expressions</Description>
     <Copyright>Crosscut Solutions AB</Copyright>
+    <PackageProjectUrl>https://github.com/crosscutsolutions/gremlin.linq</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/crosscutsolutions/gremlin.linq</RepositoryUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

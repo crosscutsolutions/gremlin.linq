@@ -137,6 +137,17 @@
         }
 
         [TestMethod]
+        public void TestSimpleWhere()
+        {
+            IGraphClient client = new TestGraphClient();
+            var q = client
+                .From<User>()
+                .Where(a => a.FirstName =="kalle")
+                .BuildGremlinQuery();
+            Assert.AreEqual("g.V().has('label','User').has('FirstName', 'kalle')",q);
+        }
+
+        [TestMethod]
         public void TestWhereWithEqual()
         {
             IGraphClient client = new TestGraphClient();

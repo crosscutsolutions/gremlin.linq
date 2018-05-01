@@ -39,6 +39,10 @@
             where TEntity : new()
         {
             var result = await _gremlinClient.SubmitWithSingleResultAsync<dynamic>(gremlinExpression);
+            if (result == null)
+            {
+                return null;
+            }
             var materialized = Materialize<TEntity>(result);
             return materialized as QueryResult<TEntity>;
         }

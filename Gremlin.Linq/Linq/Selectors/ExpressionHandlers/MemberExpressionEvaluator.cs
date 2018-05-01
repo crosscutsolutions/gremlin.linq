@@ -8,15 +8,17 @@ namespace Gremlin.Linq.Linq.Selectors.ExpressionHandlers
 
     internal class MemberExpressionEvaluator : IExpressionEvaluator
     {
-        private MemberExpression memberExpression;
+        private readonly BinaryExpression _binaryExpression;
 
         public MemberExpressionEvaluator(Expression expression)
         {
-            this.memberExpression = expression as MemberExpression;
+            this._binaryExpression = expression as BinaryExpression;
         }
         public string Evaluate()
-        {
-            throw new NotImplementedException();
+        {            
+            var expression = Evaluator.PartialEval(_binaryExpression.Right as MemberExpression);
+            var value = expression.ToString();            
+            return $".has('{(_binaryExpression.Left as MemberExpression)?.Member.Name}', {value})";
         }
     }
 }

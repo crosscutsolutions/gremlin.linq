@@ -80,7 +80,7 @@
             if (value is DateTime)
             {
                 var val = ((DateTime)value).ToString("s");
-                return $".property('{propertyInfo.Name}', {val})";
+                return $".property('{propertyInfo.Name}', '{val}')";
             }
 
             if (value is double || value is float)

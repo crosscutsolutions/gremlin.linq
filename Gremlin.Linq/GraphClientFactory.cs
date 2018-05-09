@@ -11,15 +11,27 @@
             _configuration = configuration;
         }
 
+        public IGremlinLogger Logger { get; set; }
+
         public IGraphClient CreateGremlinGraphClient(GraphClientSettings settings)
         {
-            return new GremlinGraphClient(settings.Url, settings.Database, settings.Collection,settings.Password);
+            var client =
+                new GremlinGraphClient(settings.Url, settings.Database, settings.Collection, settings.Password)
+                {
+                    Logger = Logger
+                };
+            return client;
         }
 
         public IGraphClient CreateGremlinGraphClient()
         {
             var settings = new GraphClientSettings(_configuration);
-            return new GremlinGraphClient(settings.Url, settings.Database, settings.Collection,settings.Password);
+            var gremlinGraphClient =
+                new GremlinGraphClient(settings.Url, settings.Database, settings.Collection, settings.Password)
+                {
+                    Logger = Logger
+                };
+            return gremlinGraphClient;
         }
     }
 }

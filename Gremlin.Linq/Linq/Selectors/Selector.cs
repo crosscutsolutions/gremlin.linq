@@ -1,15 +1,15 @@
 ﻿namespace Gremlin.Linq.Linq
 {
-    public class Selector<TEntity> : Selector
+    public abstract class Selector<TEntity> : Selector
     {
-        public Selector(IGraphClient graphClient) : base(graphClient)
+        protected Selector(IGraphClient graphClient) : base(graphClient)
         {
         }
     }
 
-    public class Selector : IGremlinQueryable
+    public abstract class Selector : IGremlinQueryable
     {
-        public Selector(IGraphClient graphClient)
+        protected Selector(IGraphClient graphClient)
         {
             Client = graphClient;
         }

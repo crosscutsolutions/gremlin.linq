@@ -37,15 +37,6 @@
             return addCommand;
         }
 
-        public static WhereSelector<T> Where<T>(this IWhereSelector<T> selector, Expression<Func<T, bool>> func)
-        {
-            var whereSelector = new WhereSelector<T>(selector.Client, func)
-            {
-                ParentSelector = selector
-            };
-            return whereSelector;
-        }
-
         public static WhereInSelector<T> WhereIn<T>(this IWhereSelector<T> selector, Expression<Func<T, object>> func,
             IEnumerable<object> values)
         {

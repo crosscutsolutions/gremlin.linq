@@ -1,6 +1,6 @@
 ﻿namespace Gremlin.Linq
 {
-    public class Vertex : IGremlinEntity
+    public class Edge : IGremlinEntity
     {
         public string Id { get; set; }
     }

@@ -13,9 +13,9 @@
             _value = value;
         }
 
-        public EdgeSelector<TEdgeEntity> SelectOut<TEdgeEntity>(string relation)
+        public ConnectedVertexSelector<TEdgeEntity> SelectOut<TEdgeEntity>(string relation)
         {
-            var edgeSelector = new EdgeSelector<TEdgeEntity>(_graphClient, relation)
+            var edgeSelector = new ConnectedVertexSelector<TEdgeEntity>(_graphClient, relation)
             {
                 ParentSelector = this
             };

@@ -1,17 +1,9 @@
 ﻿namespace Gremlin.Linq.Linq
 {
-    public class EdgeSelector<T> : Selector<T>
+    public abstract class EdgeSelector : Selector
     {
-        private readonly string _relation;
-
-        public EdgeSelector(IGraphClient graphClient, string relation) : base(graphClient)
+        protected EdgeSelector(IGraphClient graphClient) : base(graphClient)
         {
-            _relation = relation;
-        }
-
-        public override string BuildGremlinQuery()
-        {
-            return ParentSelector.BuildGremlinQuery() + $".out('{_relation}')";
         }
     }
 }

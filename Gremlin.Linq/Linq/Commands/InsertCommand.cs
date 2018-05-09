@@ -1,5 +1,6 @@
 ﻿namespace Gremlin.Linq.Linq
 {
+    using System;
     using System.Collections;
     using System.Globalization;
     using System.Reflection;
@@ -76,38 +77,48 @@
                 return string.Empty;
             }
 
+            return propertyInfo.Name.BuildGremlinQueryForValue(value);
+        }
+        public static string BuildGremlinQueryForValue(this string propertyInfo, object value)
+            {
+                if (value is DateTime)
+            {
+                var val = ((DateTime)value).ToString("s");
+                return $".property('{propertyInfo}', '{val}')";
+            }
+
             if (value is double || value is float)
             {
                 var val = (double) value;
-                return $".property('{propertyInfo.Name}', {val.ToString(CultureInfo.GetCultureInfo("en-US"))})";
+                return $".property('{propertyInfo}', {val.ToString(CultureInfo.GetCultureInfo("en-US"))})";
             }
 
             if (value is bool boolValue)
             {
-                return $".property('{propertyInfo.Name}', {boolValue.ToString().ToLower()})";
+                return $".property('{propertyInfo}', {boolValue.ToString().ToLower()})";
             }
 
             if (value.GetType().IsPrimitive)
             {
-                return $".property('{propertyInfo.Name}', {value})";
+                return $".property('{propertyInfo}', {value})";
             }
 
             if (value is string)
             {
-                return $".property('{propertyInfo.Name}', '{(value as string).Replace("\"", "")}')";
+                return $".property('{propertyInfo}', '{(value as string).Replace("\"", "")}')";
             }
 
             if (value is IEnumerable)
             {
-                return $".property('{propertyInfo.Name}', '{JsonConvert.SerializeObject(value)}')";
+                return $".property('{propertyInfo}', '{JsonConvert.SerializeObject(value)}')";
             }
 
-            if (propertyInfo.PropertyType.IsClass || propertyInfo.PropertyType.IsInterface)
+            if (value.GetType().IsClass || value.GetType().IsInterface)
             {
-                return $".property('{propertyInfo.Name}', '{JsonConvert.SerializeObject(value)}')";
+                return $".property('{propertyInfo}', '{JsonConvert.SerializeObject(value)}')";
             }
 
-            return $".property('{propertyInfo.Name}', '{value}')";
+            return $".property('{propertyInfo}', '{value}')";
         }
     }
 }

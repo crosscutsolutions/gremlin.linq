@@ -6,9 +6,9 @@
 
     public static class WhereSelectorExtensions
     {
-        public static EdgeSelector<TEdgeEntity> SelectOut<TEdgeEntity>(this IWhereSelector selector, string relation)
+        public static ConnectedVertexSelector<TEdgeEntity> SelectOut<TEdgeEntity>(this IWhereSelector selector, string relation)
         {
-            var edgeSelector = new EdgeSelector<TEdgeEntity>(selector.Client, relation)
+            var edgeSelector = new ConnectedVertexSelector<TEdgeEntity>(selector.Client, relation)
             {
                 ParentSelector = selector
             };
@@ -65,6 +65,24 @@
             return outSelector;
         }
 
+        public static InEdgeSelector<T> InEdge<T>(this IWhereSelector selector) where T : Edge
+        {
+            var outSelector = new InEdgeSelector<T>(selector.Client)
+            {
+                ParentSelector = selector
+            };
+            return outSelector;
+        }
+        
+        public static OutEdgeSelector<T> OutEdge<T>(this IWhereSelector selector) where T:Edge
+        {
+            var outSelector = new OutEdgeSelector<T>(selector.Client)
+            {
+                ParentSelector = selector
+            };
+            return outSelector;
+        }
+
         public static InSelector<T> In<T>(this IWhereSelector selector)
         {
             var inSelector = new InSelector<T>(selector.Client)
@@ -72,6 +90,24 @@
                 ParentSelector = selector
             };
             return inSelector;
+        }
+    }
+
+    public static class EdgeSelectorExtensions
+    {
+        public static OutVertexSelector<TVertex> OutVertex<TVertex>(this EdgeSelector edgeSelector)
+        {
+            return new OutVertexSelector<TVertex>(edgeSelector.Client)
+            {
+                ParentSelector = edgeSelector
+            };
+        }
+        public static InVertexSelector<TVertex> InVertex<TVertex>(this EdgeSelector edgeSelector)
+        {
+            return new InVertexSelector<TVertex>(edgeSelector.Client)
+            {
+                ParentSelector = edgeSelector
+            };
         }
     }
 }

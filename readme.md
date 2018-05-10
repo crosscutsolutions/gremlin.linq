@@ -48,7 +48,6 @@ var login = client
 ```
 
 ##Querying graph
-
 To query the graph you can use lambda expressions. In the example below we will find users with firstname *John*
 
 ```
@@ -76,4 +75,28 @@ var user = client
 	.Where(login=>login.Provider=="Google")
 	.In<User>()
 	.SubmitWithSingleResultAsync();
+```
+
+
+To select verticies and edges
+```
+var courses = await _graphClient
+                .From<User>().As<User>()
+                .Where(a => a.SubjectId == userId)
+                .OutEdge<UserLogin>().As<UserLogin>()
+                .InVertex<Login>().As<Login>()
+                .Select<User,Login,UserLogin>()
+                .SubmitAsync();            
+```
+
+
+To update edge
+```
+var courses = await _graphClient
+                .From<User>().As<User>()
+                .Where(a => a.SubjectId == userId)
+                .OutEdge<UserLogin>().As<UserLogin>()
+                .Select<UserLogin>()
+		.Set("LoginCount",3)
+                .SubmitAsync();            
 ```

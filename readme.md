@@ -1,6 +1,6 @@
-﻿# Gremlin.Linq
+﻿# Gremlin.Linq for Azure Cosmos Graph DB
 
-Gremlin.Linq is a library that enables you to write fluent queries using lambda expressions.
+Gremlin.Linq is a library that enables you to write fluent queries using lambda expressions. Targeted towards Azure Cosmos Graph DB.
 
 ## Adding entities
 When you add entities you can either work with pure POCO's or use classes that derives from the Vertex class.

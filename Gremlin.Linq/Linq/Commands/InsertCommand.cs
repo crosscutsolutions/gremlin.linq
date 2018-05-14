@@ -26,7 +26,11 @@
             var propertyInfos = _entity.GetType().GetProperties();
             foreach (var propertyInfo in propertyInfos)
             {
-                result.Append(propertyInfo.BuildGremlinQuery(_entity));
+                string gremlinCode = propertyInfo.BuildGremlinQuery(_entity);
+                if (!string.IsNullOrEmpty(gremlinCode))
+                {
+                    result.Append(gremlinCode);
+                }
             }
 
             return result.ToString();
@@ -60,7 +64,11 @@
             var propertyInfos = _entity.GetType().GetProperties();
             foreach (var propertyInfo in propertyInfos)
             {
-                result.Append(propertyInfo.BuildGremlinQuery(_entity));
+                var gremlinQuery = propertyInfo.BuildGremlinQuery(_entity);
+                if (!string.IsNullOrEmpty(gremlinQuery))
+                {
+                    result.Append(gremlinQuery);
+                }
             }
 
             return result.ToString();
@@ -71,6 +79,11 @@
     {
         public static string BuildGremlinQuery(this PropertyInfo propertyInfo, object entity)
         {
+
+            if (propertyInfo.GetCustomAttribute<IgnoreAttribute>() != null)
+            {
+                return null;
+            }
             var value = propertyInfo.GetGetMethod().Invoke(entity, new object[0]);
             if (value == null)
             {

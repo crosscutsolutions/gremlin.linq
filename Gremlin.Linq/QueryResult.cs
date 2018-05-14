@@ -12,5 +12,6 @@
         public string Label { get; set; }
 
         [JsonProperty("properties")] public TEntity Entity { get; set; }
+        
     }
 }

@@ -9,7 +9,7 @@
         {
             Entity = entity;
             Relation = relation;
-        }
+        }   
 
         internal IGremlinQueryable ParentSelector { get; set; }
         internal InsertCommand InsertCommand { get; set; }

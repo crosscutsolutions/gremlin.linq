@@ -170,7 +170,20 @@
                     storedValue = value;
                 }
 
-                if (propertyInfo.PropertyType.IsPrimitive)
+                if (propertyInfo.PropertyType.IsEnum)
+                {
+                    if (storedValue is long l)
+                    {
+                        propertyInfo.GetSetMethod().Invoke(resultEntity,
+                            new object[] {(int) l});
+                    }
+                    else if (storedValue is string s)
+                    {
+                        propertyInfo.GetSetMethod().Invoke(resultEntity,
+                            new[] {Enum.Parse(propertyInfo.PropertyType, s)});
+                    }
+                }
+                else if (propertyInfo.PropertyType.IsPrimitive)
                 {
                     propertyInfo.GetSetMethod().Invoke(resultEntity,
                         new[] {Convert.ChangeType(storedValue.ToString(), propertyInfo.PropertyType)});

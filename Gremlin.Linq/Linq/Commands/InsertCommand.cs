@@ -105,6 +105,11 @@
                 var val = (double) value;
                 return $".property('{propertyInfo}', {val.ToString(CultureInfo.GetCultureInfo("en-US"))})";
             }
+            
+            if (value.GetType().IsEnum)
+            {
+                return $".property('{propertyInfo}', {(int)value})";
+            }
 
             if (value is bool boolValue)
             {

@@ -21,7 +21,7 @@
                 .BuildGremlinQuery();
             Console.WriteLine(result);
             Assert.AreEqual(
-                "g.V().has('label','User').has('FirstName', 'name').has('Id', 'id').has('Age', 3).out('has')", result);
+                "g.V().has('label','User').has('FirstName', 'name').has('Id', 'id').has('Age', 3).out('has').hasLabel('Login')", result);
         }
 
         [TestMethod]
@@ -42,7 +42,7 @@
                 .Where("FirstName", "test")
                 .SelectOut<Login>("has")
                 .BuildGremlinQuery();
-            Assert.AreEqual("g.V().has('FirstName', 'test').out('has')", query);
+            Assert.AreEqual("g.V().has('FirstName', 'test').out('has').hasLabel('Login')", query);
         }
 
         [TestMethod]

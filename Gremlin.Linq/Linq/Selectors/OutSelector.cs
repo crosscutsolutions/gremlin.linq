@@ -1,6 +1,6 @@
 ﻿namespace Gremlin.Linq.Linq
 {
-    public class OutSelector<TEntity> : Selector<TEntity>
+    public class OutSelector<TEntity> : Selector<TEntity>, ICountable
     {
         private string _alias;
 

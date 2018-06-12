@@ -108,6 +108,15 @@
             return selectSelector;
         }
 
+        public static DropCommand Drop(this Selector selector)
+        {
+            var dropCommand = new DropCommand(selector.Client)
+            {
+                ParentSelector = selector
+            };
+            return dropCommand;
+        }
+
         public static async Task<IEnumerable<Tuple<QueryResult<T1>, QueryResult<T2>>>> SubmitAsync<T1, T2>(this SelectSelector selector) where T1 : new() where T2 : new()
         {
             var query = selector.BuildGremlinQuery();

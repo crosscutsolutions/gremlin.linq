@@ -1,10 +1,21 @@
 ﻿namespace Gremlin.Linq.Linq
 {
+    using Net.Process.Traversal;
+    using Selectors;
+
     public static class GraphClientExtensions
     {
         public static InsertCommand<TEntity> Add<TEntity>(this IGraphClient client, TEntity entity)
         {
             var command = new InsertCommand<TEntity>(client, entity);
+            return command;
+        }
+        public static UpdateCommand<TEntity> UpdateWith<TEntity>(this IWhereSelector<TEntity> selector, TEntity entity)
+        {
+            var command = new UpdateCommand<TEntity>(selector.Client, entity)
+            {
+                ParentSelector = selector
+            };
             return command;
         }
 

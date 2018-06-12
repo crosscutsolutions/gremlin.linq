@@ -46,8 +46,9 @@
             };
             return whereSelector;
         }
+        
 
-        public static OutSelector<T> Out<T>(this IWhereSelector selector)
+        public static OutSelector<T> Out<T>(this Selector selector)
         {
             var outSelector = new OutSelector<T>(selector.Client)
             {

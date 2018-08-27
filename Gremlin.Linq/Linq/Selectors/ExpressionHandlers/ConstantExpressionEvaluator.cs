@@ -28,7 +28,10 @@
             }
             else if (value != null && (_binaryExpression.NodeType == ExpressionType.Equal))
             {
-                if (value is string && !value.ToString().StartsWith("\""))
+                if(value is bool)
+                {
+                    value = $"{value.ToString().ToLower()}";
+                }else if(value is string && !value.ToString().StartsWith("\""))
                 {
                     value = $"'{value}'";
                 }

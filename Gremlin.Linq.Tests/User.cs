@@ -1,4 +1,6 @@
-﻿namespace Gremlin.Linq.Entities
+﻿using Newtonsoft.Json;
+
+namespace Gremlin.Linq.Entities
 {
     using System.Collections.Generic;
 
@@ -11,5 +13,8 @@
         public string SubjectId { get; set; }
         public string Username { get; set; }
         public int Age { get; set; }
+        
+        [JsonProperty("NameOverride")]
+        public string TestJsonPropertyName { get; set; }
     }
 }

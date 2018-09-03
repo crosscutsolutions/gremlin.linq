@@ -21,7 +21,7 @@
 
         public override string BuildGremlinQuery()
         {
-            var result = ParentSelector.BuildGremlinQuery() + $".inV().has('label','{typeof(TEntity).Name}')";
+            var result = ParentSelector.BuildGremlinQuery() + $".inV().has('label','{typeof(TEntity).GetLabel()}')";
             if (!string.IsNullOrEmpty(_alias))
             {
                 result = result + $".as('{_alias}')";

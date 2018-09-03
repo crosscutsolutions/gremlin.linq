@@ -1,4 +1,6 @@
-﻿namespace Gremlin.Linq.Tests
+﻿using System.Security.Cryptography.X509Certificates;
+
+namespace Gremlin.Linq.Tests
 {
     using System;
     using Entities;
@@ -178,6 +180,54 @@
                 .Where(a => a.FirstName.Equals("kalle") && (a.LastName == "Sven" || a.Age > 3))
                 .BuildGremlinQuery();
             Assert.AreEqual("g.V().has('label','User').has('FirstName', 'kalle').has('LastName', 'Sven').has('Age', gt(3))", q);
+        }
+
+        [TestMethod]
+        public void TestJsonPropertyNameOverrideWhere()
+        {
+            IGraphClient client = new TestGraphClient();
+            var q = client
+                .From<User>()
+                .Where(x => x.TestJsonPropertyName == "a")
+                .BuildGremlinQuery();
+            Assert.AreEqual("g.V().has('label','User').has('NameOverride', 'a')", q);
+        }
+
+        [TestMethod]
+        public void TestJsonPropertyNameOverrideSet()
+        {
+            IGraphClient client = new TestGraphClient();
+            var q = client
+                .Add(new User
+                {
+                    Age = 10,
+                    FirstName = "name",
+                    TestJsonPropertyName = "a"
+                })
+                .BuildGremlinQuery();
+            Assert.AreEqual("g.addV('User').property('FirstName', 'name').property('Age', 10).property('NameOverride', 'a')", q);
+        }
+
+        [TestMethod]
+        public void TestCustomLabelForUser()
+        {
+            IGraphClient client = new TestGraphClient();
+            var q = client
+                .From<UserWithCustomLabel>()
+                .Where(a => a.Name == "name")
+                .BuildGremlinQuery();
+            Assert.AreEqual("g.V().has('label','CustomUser').has('Name', 'name')", q);
+        }
+
+        [TestMethod]
+        public void TestCustomJsonNetLabelForUser()
+        {
+            IGraphClient client = new TestGraphClient();
+            var q = client
+                .From<UserWithCustomLabelUsingJsonNet>()
+                .Where(a => a.Name == "name")
+                .BuildGremlinQuery();
+            Assert.AreEqual("g.V().has('label','JsonNetUser').has('Name', 'name')", q);
         }
     }
 }

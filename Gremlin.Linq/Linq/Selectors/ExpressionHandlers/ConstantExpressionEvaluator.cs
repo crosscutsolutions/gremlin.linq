@@ -42,7 +42,7 @@
                 throw new ArgumentException($"Unsupported nodetype {_binaryExpression.NodeType}");
             }
 
-            return $".has('{((MemberExpression) _binaryExpression.Left).Member.Name}', {value})";
+            return $".has('{((MemberExpression) _binaryExpression.Left).Member.GetPropertyName()}', {value})";
         }
     }
 }

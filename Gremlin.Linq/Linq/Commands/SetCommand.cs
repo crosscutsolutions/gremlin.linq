@@ -12,7 +12,7 @@ namespace Gremlin.Linq.Linq.Commands
 
         public IGremlinQueryable ParentSelector { get; set; }
 
-        internal SetCommand(IGraphClient client, string property,object value) : base(client)
+        internal SetCommand(IGraphClient client, string property, object value) : base(client)
         {
             _property = property;
             _value = value;
@@ -26,7 +26,7 @@ namespace Gremlin.Linq.Linq.Commands
     public class SetCommand<T> : SetCommand
     {
 
-        public SetCommand(IGraphClient client, PropertyInfo property, object value) : base(client, property.Name,value)
+        public SetCommand(IGraphClient client, PropertyInfo property, object value) : base(client, property.GetPropertyName(), value)
         {
         }
         

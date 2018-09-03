@@ -151,7 +151,7 @@
             var properties = (IDictionary<string, object>) propertiesObj;
             foreach (var propertyInfo in entityProperties)
             {
-                if (!properties.TryGetValue(propertyInfo.Name, out dynamic value))
+                if (!properties.TryGetValue(propertyInfo.GetPropertyName(), out dynamic value))
                 {
                     continue;
                 }

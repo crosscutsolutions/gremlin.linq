@@ -14,7 +14,7 @@
         }
         public string Evaluate()
         {
-            var memberName = (_expression.Object as MemberExpression)?.Member.Name;
+            var memberName = (_expression.Object as MemberExpression)?.Member.GetPropertyName();
             var value = _expression.Arguments.First();
             return $".has('{memberName}', '{value.ToString().Replace("\"","")}')";
         }

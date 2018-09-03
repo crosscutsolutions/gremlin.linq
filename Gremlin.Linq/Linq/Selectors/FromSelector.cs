@@ -2,7 +2,6 @@
 {
     using System;
     using System.Linq.Expressions;
-    using System.Reflection;
 
     public class FromSelector<TEntity> : Selector<TEntity>, ICountable, IWhereSelector<TEntity>
     {
@@ -47,19 +46,5 @@
             return whereSelector;
         }
         
-    }
-
-    public static class TypeExtensions
-    {
-        public static string GetLabel(this Type t)
-        {
-            var labelAttribute = t.GetCustomAttribute<GremlinLabelAttribute>();
-            if (labelAttribute != null)
-            {
-                return labelAttribute.Label;
-            }
-
-            return t.Name;            
-        }
     }
 }

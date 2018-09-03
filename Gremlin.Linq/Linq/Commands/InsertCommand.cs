@@ -90,7 +90,7 @@
                 return string.Empty;
             }
 
-            return propertyInfo.Name.BuildGremlinQueryForValue(value);
+            return propertyInfo.GetPropertyName().BuildGremlinQueryForValue(value);
         }
         public static string BuildGremlinQueryForValue(this string propertyInfo, object value)
             {

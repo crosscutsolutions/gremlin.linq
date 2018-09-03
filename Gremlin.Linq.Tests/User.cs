@@ -17,4 +17,10 @@ namespace Gremlin.Linq.Entities
         [JsonProperty("NameOverride")]
         public string TestJsonPropertyName { get; set; }
     }
+
+    public class UserWithBool : Vertex
+    {
+        public string Name { get; set; }
+        public bool Active { get; set; }
+    }
 }

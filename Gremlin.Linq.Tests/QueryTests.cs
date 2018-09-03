@@ -183,6 +183,17 @@ namespace Gremlin.Linq.Tests
         }
 
         [TestMethod]
+        public void TestCorrectCaseOnBoolProperties()
+        {
+            IGraphClient client = new TestGraphClient();
+            var q = client
+                .From<UserWithBool>()
+                .Where(a => a.Active == true)
+                .BuildGremlinQuery();
+            Assert.AreEqual("g.V().has('label','UserWithBool').has('Active', true)", q);
+        }
+
+        [TestMethod]
         public void TestJsonPropertyNameOverrideWhere()
         {
             IGraphClient client = new TestGraphClient();

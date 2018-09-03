@@ -23,7 +23,7 @@
 
         public override string BuildGremlinQuery()
         {
-            var result = ParentSelector.BuildGremlinQuery() + $".inE().has('label','{typeof(TEntity).Name}')";
+            var result = ParentSelector.BuildGremlinQuery() + $".inE().has('label','{typeof(TEntity).GetLabel()}')";
             if (!string.IsNullOrEmpty(_alias))
             {
                 result = result + $".as('{_alias}')";

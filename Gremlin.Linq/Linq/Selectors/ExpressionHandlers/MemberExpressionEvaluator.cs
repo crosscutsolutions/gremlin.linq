@@ -18,7 +18,7 @@ namespace Gremlin.Linq.Linq.Selectors.ExpressionHandlers
         {            
             var expression = Evaluator.PartialEval(_binaryExpression.Right as MemberExpression);
             var value = expression.ToString();            
-            return $".has('{(_binaryExpression.Left as MemberExpression)?.Member.Name}', '{value.Replace("\"", "")}')";
+            return $".has('{(_binaryExpression.Left as MemberExpression)?.Member.GetPropertyName()}', '{value.Replace("\"", "")}')";
         }
     }
 }

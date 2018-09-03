@@ -15,13 +15,13 @@
         }
         public OutSelector<TEntity> As<T>()
         {
-            _alias = typeof(T).Name;
+            _alias = typeof(T).GetLabel();
             return this;
         }
 
         public override string BuildGremlinQuery()
         {
-            var result= ParentSelector.BuildGremlinQuery() + $".out().has('label','{typeof(TEntity).Name}')";
+            var result = ParentSelector.BuildGremlinQuery() + $".out().has('label','{typeof(TEntity).GetLabel()}')";
             if (!string.IsNullOrEmpty(_alias))
             {
                 result = result + $".as('{_alias}')";

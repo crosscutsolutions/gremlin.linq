@@ -12,4 +12,10 @@
         public string Username { get; set; }
         public int Age { get; set; }
     }
+
+    public class UserWithBool : Vertex
+    {
+        public string Name { get; set; }
+        public bool Active { get; set; }
+    }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace Gremlin.Linq.Linq.Selectors.ExpressionHandlers
@@ -14,7 +15,7 @@ namespace Gremlin.Linq.Linq.Selectors.ExpressionHandlers
             {
                 return new BinaryExpressionEvaluator(expression);
             }
-            else if (expression is MethodCallExpression)
+            if (expression is MethodCallExpression)
             {
                 return new MethodCallExpressionEvaluator(expression);
             }

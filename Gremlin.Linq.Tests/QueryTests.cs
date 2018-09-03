@@ -179,5 +179,16 @@
                 .BuildGremlinQuery();
             Assert.AreEqual("g.V().has('label','User').has('FirstName', 'kalle').has('LastName', 'Sven').has('Age', gt(3))", q);
         }
+
+        [TestMethod]
+        public void TestCorrectCaseOnBoolProperties()
+        {
+            IGraphClient client = new TestGraphClient();
+            var q = client
+                .From<UserWithBool>()
+                .Where(a => a.Active == true)
+                .BuildGremlinQuery();
+            Assert.AreEqual("g.V().has('label','UserWithBool').has('Active', true)", q);
+        }
     }
 }

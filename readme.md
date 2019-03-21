@@ -25,12 +25,13 @@ Your appsettings.json should then look like this.
   "gremlin": {
     "url": "yourdb.azure.com",
     "database": "<databaseName>",
-    "collection": "<collectionName>"
+    "collection": "<collectionName>",
+	"password": "<access key>"
   }
 }
 ```
 
-Adding entities at it's simplest 
+Adding entities at its simplest 
 
 ```
 var user = client

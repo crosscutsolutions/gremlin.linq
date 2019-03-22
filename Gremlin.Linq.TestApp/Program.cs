@@ -1,34 +1,36 @@
 ﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Gremlin.Linq.Linq;
+using Microsoft.Extensions.Configuration;
 
 namespace Gremlin.Linq.TestApp
 {
-    using Linq;
-    using Microsoft.Extensions.Configuration;
-    using System.Linq;
-    using System.Threading.Tasks;
-
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             MainAsync(args).GetAwaiter().GetResult();
             Console.ReadLine();
         }
-        static async Task MainAsync(string[] args) { 
-        var config = new ConfigurationBuilder()
+
+        private static async Task MainAsync(string[] args)
+        {
+            var config = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
+                .AddJsonFile("appsettings.Development.json", false)
                 .Build();
             var settings = new GraphClientSettings(config);
-            var client = new GremlinGraphClient(settings.Url,settings.Database,settings.Collection,settings.Password)
-                {
-                    Logger = new GremlinLogger()
-                }; 
+            var client = new GremlinGraphClient(settings.Url, settings.Database, settings.Collection, settings.Password)
+            {
+                Logger = new GremlinLogger()
+            };
 
             var users = await client.From<User>().SubmitAsync();
             Console.WriteLine(users.Count());
 
             var user = await client
-                .Add(new User()
+                .Add(new User
                 {
                     Name = "John Doe"
                 })
@@ -41,6 +43,6 @@ namespace Gremlin.Linq.TestApp
 
     public class User : Vertex
     {
-        public string Name { get; set; }        
+        public string Name { get; set; }
     }
 }

@@ -159,6 +159,17 @@
         }
 
         [TestMethod]
+        public void TestWhereWithNotEqual()
+        {
+            IGraphClient client = new TestGraphClient();
+            var q = client
+                .From<User>()
+                .Where(a => a.FirstName != "kalle")
+                .BuildGremlinQuery();
+            Assert.AreEqual("g.V().has('label','User').has('FirstName', neq('kalle'))",q);
+        }
+
+        [TestMethod]
         public void TestWhereWithMultipleConditions()
         {
             IGraphClient client = new TestGraphClient();

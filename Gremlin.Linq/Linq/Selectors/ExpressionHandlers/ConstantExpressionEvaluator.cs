@@ -1,4 +1,6 @@
-﻿namespace Gremlin.Linq.Linq.Selectors.ExpressionHandlers
+﻿using System.Linq;
+
+namespace Gremlin.Linq.Linq.Selectors.ExpressionHandlers
 {
     using System;
     using System.Linq.Expressions;
@@ -37,12 +39,25 @@
                     value = $"{value}";
                 }
             }
+            else if (value != null && (_binaryExpression.NodeType == ExpressionType.NotEqual))
+            {
+                if (value is string && !value.ToString().StartsWith("\""))
+                {
+                    value = $"neq('{value}')";
+                }
+                else
+                {
+                    value = $"neq({value})";
+                }
+            }
             else
             {
                 throw new ArgumentException($"Unsupported nodetype {_binaryExpression.NodeType}");
             }
 
-            return $".has('{((MemberExpression) _binaryExpression.Left).Member.Name}', {value})";
+            var member = ((MemberExpression) _binaryExpression.Left).Member;
+            var propertyName = member.GetGremlinPropertyName();
+            return $".has('{propertyName}', {value})";
         }
     }
 }

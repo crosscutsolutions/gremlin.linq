@@ -22,7 +22,7 @@
         {
             var result = new StringBuilder();
             result.Append(ParentCommand == null ? "g" : ParentCommand.BuildGremlinQuery());
-            result.Append($".addV('{_entity.GetType().Name}')");
+            result.Append($".addV('{_entity.GetType().GetLabel()}')");
             var propertyInfos = _entity.GetType().GetProperties();
             foreach (var propertyInfo in propertyInfos)
             {
@@ -60,7 +60,7 @@
                 result.Append(ParentCommand.BuildGremlinQuery());
             }
 
-            result.Append($".addV('{_entity.GetType().Name}')");
+            result.Append($".addV('{_entity.GetType().GetLabel()}')");
             var propertyInfos = _entity.GetType().GetProperties();
             foreach (var propertyInfo in propertyInfos)
             {

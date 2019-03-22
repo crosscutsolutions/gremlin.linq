@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Gremlin.Linq.Linq;
 using Microsoft.Extensions.Configuration;
@@ -26,23 +25,40 @@ namespace Gremlin.Linq.TestApp
                 Logger = new GremlinLogger()
             };
 
-            var users = await client.From<User>().SubmitAsync();
-            Console.WriteLine(users.Count());
-
-            var user = await client
+            await client
                 .Add(new User
                 {
-                    Name = "John Doe"
+                    FirstName = "John",
+                    LastName = "Doe",
+                    Age = 31
+                })
+                .SubmitAsync();
+            await client
+                .Add(new MyClass
+                {
+                    FavoriteColor = "Blue"
                 })
                 .SubmitAsync();
 
-            users = await client.From<User>().SubmitAsync();
-            Console.WriteLine(users.Count());
+            var users = await client.From<User>().SubmitAsync();
+            foreach (var user in users)
+                Console.WriteLine($"{user.Entity.FirstName} {user.Entity.LastName}, Age = {user.Entity.Age}");
         }
     }
 
+    [GremlinLabel("u")]
     public class User : Vertex
     {
-        public string Name { get; set; }
+        [GremlinProperty("first-name")] public string FirstName { get; set; }
+
+        [GremlinProperty("last-name")] public string LastName { get; set; }
+        public int Age { get; set; }
     }
+
+    
+    [GremlinLabel("my-custom-name")]
+    public class MyClass {
+        public string FavoriteColor {get; set; }
+    }
+
 }

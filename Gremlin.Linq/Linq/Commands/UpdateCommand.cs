@@ -1,12 +1,7 @@
-﻿namespace Gremlin.Linq.Linq
-{
-    using System;
-    using System.Collections;
-    using System.Globalization;
-    using System.Reflection;
-    using System.Text;
-    using Newtonsoft.Json;
+﻿using System.Text;
 
+namespace Gremlin.Linq.Linq
+{
     public class UpdateCommand : Command
     {
         private readonly object _entity;
@@ -25,11 +20,8 @@
             var propertyInfos = _entity.GetType().GetProperties();
             foreach (var propertyInfo in propertyInfos)
             {
-                string gremlinCode = propertyInfo.BuildGremlinQuery(_entity);
-                if (!string.IsNullOrEmpty(gremlinCode))
-                {
-                    result.Append(gremlinCode);
-                }
+                var gremlinCode = propertyInfo.BuildGremlinQuery(_entity);
+                if (!string.IsNullOrEmpty(gremlinCode)) result.Append(gremlinCode);
             }
 
             return result.ToString();
@@ -52,30 +44,20 @@
         {
             var result = new StringBuilder();
             if (ParentSelector != null)
-            {
                 result.Append(ParentSelector.BuildGremlinQuery());
-            }
             else if (ParentCommand != null)
-            {
                 result.Append(ParentCommand.BuildGremlinQuery());
-            }
             else
-            {
                 result.Append("g");
-            }
 
             var propertyInfos = _entity.GetType().GetProperties();
             foreach (var propertyInfo in propertyInfos)
             {
                 var gremlinQuery = propertyInfo.BuildGremlinQuery(_entity);
-                if (!string.IsNullOrEmpty(gremlinQuery))
-                {
-                    result.Append(gremlinQuery);
-                }
+                if (!string.IsNullOrEmpty(gremlinQuery)) result.Append(gremlinQuery);
             }
 
             return result.ToString();
         }
     }
-    
 }

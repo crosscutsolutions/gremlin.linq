@@ -101,3 +101,24 @@ var courses = await _graphClient
 		.Set("LoginCount",3)
                 .SubmitAsync();            
 ```
+
+
+##Custom vertex properties
+
+To change the label for your vertices, you can specify the `GremlinLabel` attribute to your model class.
+
+```
+[GremlinLabel("my-vertex")]
+public class MyClass {
+	public string FavoriteColor {get; set; }
+}
+```
+
+To use a specific property name, you can specify the `GremlinProperty` attribute to your model class properties.
+
+```
+public class MyClass {
+	[GremlinProperty("fav-clr")]
+	public string FavoriteColor {get; set; }
+}
+```

@@ -22,12 +22,12 @@ using (var client =  new  GraphClientFactory(config).CreateGremlinGraphClient())
 Your appsettings.json should then look like this.
 ```
 {
-  "gremlin": {
-    "url": "yourdb.azure.com",
-    "database": "<databaseName>",
-    "collection": "<collectionName>",
-	"password": "<access key>"
-  }
+	"gremlin": {
+		"url": "yourdb.azure.com",
+		"database": "<databaseName>",
+		"collection": "<collectionName>",
+		"password": "<access key>"
+	}
 }
 ```
 
@@ -98,14 +98,16 @@ var courses = await _graphClient
                 .Where(a => a.SubjectId == userId)
                 .OutEdge<UserLogin>().As<UserLogin>()
                 .Select<UserLogin>()
-		.Set("LoginCount",3)
+                .Set("LoginCount",3)
                 .SubmitAsync();            
 ```
 
 
-##Custom vertex properties
+##Custom vertex labels and propertiy names
 
-To change the label for your vertices, you can specify the `GremlinLabel` attribute to your model class.
+When your class and property names are not suitable to map to your graph, you can specify your own labels and names.
+
+To change the label for your vertex, you can specify the `GremlinLabel(string)` attribute on your model class.
 
 ```
 [GremlinLabel("my-vertex")]
@@ -114,7 +116,7 @@ public class MyClass {
 }
 ```
 
-To use a specific property name, you can specify the `GremlinProperty` attribute to your model class properties.
+To use a specific property name, you can specify the `GremlinProperty(string)` attribute on your model class properties.
 
 ```
 public class MyClass {

@@ -22,12 +22,12 @@ using (var client =  new  GraphClientFactory(config).CreateGremlinGraphClient())
 Your appsettings.json should then look like this.
 ```
 {
-  "gremlin": {
-    "url": "yourdb.azure.com",
-    "database": "<databaseName>",
-    "collection": "<collectionName>",
-	"password": "<access key>"
-  }
+	"gremlin": {
+		"url": "yourdb.azure.com",
+		"database": "<databaseName>",
+		"collection": "<collectionName>",
+		"password": "<access key>"
+	}
 }
 ```
 
@@ -98,7 +98,7 @@ var courses = await _graphClient
                 .Where(a => a.SubjectId == userId)
                 .OutEdge<UserLogin>().As<UserLogin>()
                 .Select<UserLogin>()
-		.Set("LoginCount",3)
+                .Set("LoginCount",3)
                 .SubmitAsync();            
 ```
 

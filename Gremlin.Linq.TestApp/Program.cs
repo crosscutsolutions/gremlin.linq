@@ -33,12 +33,6 @@ namespace Gremlin.Linq.TestApp
                     Age = 31
                 })
                 .SubmitAsync();
-            await client
-                .Add(new MyClass
-                {
-                    FavoriteColor = "Blue"
-                })
-                .SubmitAsync();
 
             var users = await client.From<User>().SubmitAsync();
             foreach (var user in users)
@@ -54,11 +48,4 @@ namespace Gremlin.Linq.TestApp
         [GremlinProperty("last-name")] public string LastName { get; set; }
         public int Age { get; set; }
     }
-
-    
-    [GremlinLabel("my-custom-name")]
-    public class MyClass {
-        public string FavoriteColor {get; set; }
-    }
-
 }

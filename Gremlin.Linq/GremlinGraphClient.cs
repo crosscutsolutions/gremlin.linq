@@ -1,4 +1,6 @@
-﻿namespace Gremlin.Linq
+﻿using System.Reflection;
+
+namespace Gremlin.Linq
 {
     using System;
     using System.Collections.Generic;
@@ -151,7 +153,10 @@
             var properties = (IDictionary<string, object>) propertiesObj;
             foreach (var propertyInfo in entityProperties)
             {
-                if (!properties.TryGetValue(propertyInfo.Name, out dynamic value))
+                var propertyName = propertyInfo.Name;
+                if (propertyInfo.GetCustomAttributes(typeof(GremlinPropertyAttribute)).SingleOrDefault() is
+                    GremlinPropertyAttribute propertyAttribute) propertyName = propertyAttribute.Name;
+                if (!properties.TryGetValue(propertyName, out dynamic value))
                 {
                     continue;
                 }

@@ -24,9 +24,17 @@ namespace Gremlin.Linq.Linq.Selectors.ExpressionHandlers
             {
                 value = $"gt({value})";
             }
+            if (_binaryExpression.NodeType == ExpressionType.GreaterThanOrEqual)
+            {
+                value = $"gte({value})";
+            }
             else if (_binaryExpression.NodeType == ExpressionType.LessThan)
             {
                 value = $"lt({value})";
+            }
+            else if (_binaryExpression.NodeType == ExpressionType.LessThanOrEqual)
+            {
+                value = $"lte({value})";
             }
             else if (value != null && (_binaryExpression.NodeType == ExpressionType.Equal))
             {

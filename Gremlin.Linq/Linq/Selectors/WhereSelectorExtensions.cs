@@ -48,9 +48,9 @@
         }
         
 
-        public static OutSelector<T> Out<T>(this Selector selector)
+        public static OutSelector<T> Out<T>(this Selector selector, string edgeLabel = null)
         {
-            var outSelector = new OutSelector<T>(selector.Client)
+            var outSelector = new OutSelector<T>(selector.Client, edgeLabel)
             {
                 ParentSelector = selector
             };
@@ -75,9 +75,9 @@
             return outSelector;
         }
 
-        public static InSelector<T> In<T>(this IWhereSelector selector)
+        public static InSelector<T> In<T>(this IWhereSelector selector, string edgeLabel = null)
         {
-            var inSelector = new InSelector<T>(selector.Client)
+            var inSelector = new InSelector<T>(selector.Client, edgeLabel)
             {
                 ParentSelector = selector
             };

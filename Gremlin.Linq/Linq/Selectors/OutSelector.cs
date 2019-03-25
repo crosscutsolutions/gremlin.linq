@@ -2,17 +2,24 @@
 {
     public class OutSelector<TEntity> : Selector<TEntity>, ICountable
     {
+        private readonly string _edgeLabel;
         private string _alias;
 
-        public OutSelector(IGraphClient graphClient) : base(graphClient)
+        public OutSelector(IGraphClient graphClient, string edgeLabel) : base(graphClient)
         {
+            _edgeLabel = edgeLabel;
         }
 
         public override string BuildGremlinQuery()
         {
-            var label = typeof(TEntity).GetLabel();
-            var result = ParentSelector.BuildGremlinQuery() + $".out().has('label','{label}')";
-            if (!string.IsNullOrEmpty(_alias)) result = result + $".as('{_alias}')";
+            string result;
+            var vertexLabel = typeof(TEntity).GetLabel();
+            if (!string.IsNullOrEmpty(_edgeLabel))
+                result = ParentSelector.BuildGremlinQuery() + $".out('{_edgeLabel}').has('label','{vertexLabel}')";
+            else
+                result = ParentSelector.BuildGremlinQuery() + $".out().has('label','{vertexLabel}')";
+            if (!string.IsNullOrEmpty(_alias))
+                result += $".as('{_alias}')";
             return result;
         }
 

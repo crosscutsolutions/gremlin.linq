@@ -8,7 +8,8 @@
 
         public override string BuildGremlinQuery()
         {
-            return ParentSelector.BuildGremlinQuery() + $".in().has('label','{typeof(T).Name}')";
+            var label = typeof(T).GetLabel();
+            return ParentSelector.BuildGremlinQuery() + $".in().has('label','{label}')";
         }
     }
 }

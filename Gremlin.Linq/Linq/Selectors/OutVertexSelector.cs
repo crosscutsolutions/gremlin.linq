@@ -13,6 +13,7 @@
             _alias = alias;
             return this;
         }
+
         public OutVertexSelector<TEntity> As<T>()
         {
             _alias = typeof(T).Name;
@@ -21,11 +22,9 @@
 
         public override string BuildGremlinQuery()
         {
-            var result = ParentSelector.BuildGremlinQuery() + $".outV().has('label','{typeof(TEntity).Name}')";
-            if (!string.IsNullOrEmpty(_alias))
-            {
-                result = result + $".as('{_alias}')";
-            }
+            var label = typeof(TEntity).GetLabel();
+            var result = ParentSelector.BuildGremlinQuery() + $".outV().has('label','{label}')";
+            if (!string.IsNullOrEmpty(_alias)) result = result + $".as('{_alias}')";
             return result;
         }
     }

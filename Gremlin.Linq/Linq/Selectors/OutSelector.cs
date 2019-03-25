@@ -8,25 +8,24 @@
         {
         }
 
+        public override string BuildGremlinQuery()
+        {
+            var label = typeof(TEntity).GetLabel();
+            var result = ParentSelector.BuildGremlinQuery() + $".out().has('label','{label}')";
+            if (!string.IsNullOrEmpty(_alias)) result = result + $".as('{_alias}')";
+            return result;
+        }
+
         public OutSelector<TEntity> As(string alias)
         {
             _alias = alias;
             return this;
         }
+
         public OutSelector<TEntity> As<T>()
         {
             _alias = typeof(T).Name;
             return this;
-        }
-
-        public override string BuildGremlinQuery()
-        {
-            var result= ParentSelector.BuildGremlinQuery() + $".out().has('label','{typeof(TEntity).Name}')";
-            if (!string.IsNullOrEmpty(_alias))
-            {
-                result = result + $".as('{_alias}')";
-            }
-            return result;
         }
     }
 }

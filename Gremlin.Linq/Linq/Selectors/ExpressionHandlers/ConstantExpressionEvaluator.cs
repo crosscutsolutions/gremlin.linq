@@ -24,7 +24,7 @@ namespace Gremlin.Linq.Linq.Selectors.ExpressionHandlers
             {
                 value = $"gt({value})";
             }
-            if (_binaryExpression.NodeType == ExpressionType.GreaterThanOrEqual)
+            else if (_binaryExpression.NodeType == ExpressionType.GreaterThanOrEqual)
             {
                 value = $"gte({value})";
             }

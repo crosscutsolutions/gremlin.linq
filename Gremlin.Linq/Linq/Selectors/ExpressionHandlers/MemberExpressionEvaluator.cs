@@ -17,8 +17,9 @@ namespace Gremlin.Linq.Linq.Selectors.ExpressionHandlers
         public string Evaluate()
         {            
             var expression = Evaluator.PartialEval(_binaryExpression.Right as MemberExpression);
-            var value = expression.ToString();            
-            return $".has('{(_binaryExpression.Left as MemberExpression)?.Member.Name}', '{value.Replace("\"", "")}')";
+            var value = expression.ToString();        
+            var label = (_binaryExpression.Left as MemberExpression)?.Member.GetGremlinPropertyName();
+            return $".has('{label}', '{value.Replace("\"", "")}')";
         }
     }
 }

@@ -137,6 +137,21 @@
         }
 
         [TestMethod]
+        public void TestWhereWithGremlinProperty()
+        {
+            // Arrange
+            var subject = new TestGraphClient()
+                .From<GremlinPropertyTest>()
+                .Where(a => a.Property == "unit test value");
+
+            // Act
+            var result = subject.BuildGremlinQuery();
+
+            // Assert
+            Assert.AreEqual("g.V().has('label','GremlinPropertyTest').has('gp', 'unit test value')", result);
+        }
+        
+        [TestMethod]
         public void TestSimpleWhere()
         {
             IGraphClient client = new TestGraphClient();

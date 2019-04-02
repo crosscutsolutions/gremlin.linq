@@ -31,7 +31,8 @@
 
         public OutSelector<TEntity> As<T>()
         {
-            _alias = typeof(T).Name;
+            var vertexLabel = typeof(T).GetLabel();
+            _alias = vertexLabel;
             return this;
         }
     }

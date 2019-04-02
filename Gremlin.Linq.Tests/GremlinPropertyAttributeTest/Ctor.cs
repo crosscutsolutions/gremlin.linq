@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Gremlin.Linq.Tests
+namespace Gremlin.Linq.Tests.GremlinPropertyAttributeTest
 {
     [TestClass]
     public class GremlinPropertyAttributeTest

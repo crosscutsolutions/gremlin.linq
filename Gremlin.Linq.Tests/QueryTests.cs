@@ -1,10 +1,10 @@
-﻿namespace Gremlin.Linq.Tests
-{
-    using System;
-    using Entities;
-    using Linq;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Gremlin.Linq.Linq;
+using Gremlin.Linq.Tests.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+namespace Gremlin.Linq.Tests
+{
     [TestClass]
     public class QueryTests
     {
@@ -21,14 +21,15 @@
                 .BuildGremlinQuery();
             Console.WriteLine(result);
             Assert.AreEqual(
-                "g.V().has('label','User').has('FirstName', 'name').has('Id', 'id').has('Age', 3).out('has').hasLabel('Login')", result);
+                "g.V().has('label','User').has('FirstName', 'name').has('Id', 'id').has('Age', 3).out('has').hasLabel('Login')",
+                result);
         }
 
         [TestMethod]
         public void TestSimpleSelection()
         {
             IGraphClient client = new TestGraphClient();
-            string query = client
+            var query = client
                 .Where("FirstName", "test")
                 .BuildGremlinQuery();
             Assert.AreEqual("g.V().has('FirstName', 'test')", query);
@@ -38,7 +39,7 @@
         public void TestSimpleSelectionWithOut()
         {
             IGraphClient client = new TestGraphClient();
-            string query = client
+            var query = client
                 .Where("FirstName", "test")
                 .SelectOut<Login>("has")
                 .BuildGremlinQuery();
@@ -49,7 +50,7 @@
         public void TestAdd()
         {
             IGraphClient client = new TestGraphClient();
-            User User = new User
+            var User = new User
             {
                 FirstName = "name",
                 Age = 3,
@@ -67,7 +68,7 @@
         public void TestAddOut()
         {
             IGraphClient client = new TestGraphClient();
-            var Login = new Login()
+            var Login = new Login
             {
                 Id = "asdf"
             };
@@ -76,30 +77,9 @@
                 .Where(a => a.Id == "123")
                 .AddOut(Login, "has")
                 .BuildGremlinQuery();
-            Assert.AreEqual("g.V().has('label','User').has('Id', '123').addE('has').to(g.addV('Login').property('Id', 'asdf')).inV()",query);
-        }
-
-        [TestMethod]
-        public void TestCountWithFilter()
-        {
-            IGraphClient client = new TestGraphClient();
-            var query = client
-                .From<User>()
-                .Where(a => a.FirstName == "asdf")
-                .Count()
-                .BuildGremlinQuery();
-            Assert.AreEqual("g.V().has('label','User').has('FirstName', 'asdf').count()",query);
-        }
-
-        [TestMethod]
-        public void TestCountWithoutFilter()
-        {
-            IGraphClient client = new TestGraphClient();
-            var query = client
-                .From<User>()
-                .Count()
-                .BuildGremlinQuery();
-            Assert.AreEqual("g.V().has('label','User').count()", query);
+            Assert.AreEqual(
+                "g.V().has('label','User').has('Id', '123').addE('has').to(g.addV('Login').property('Id', 'asdf')).inV()",
+                query);
         }
 
         [TestMethod]
@@ -108,7 +88,7 @@
             IGraphClient client = new TestGraphClient();
             var q = client
                 .From<User>()
-                .WhereIn(a => a.FirstName, new string[] {"test1", "test2"})
+                .WhereIn(a => a.FirstName, new[] {"test1", "test2"})
                 .BuildGremlinQuery();
             Assert.AreEqual("g.V().has('label','User').has('FirstName',within('test1','test2'))", q);
         }
@@ -119,10 +99,11 @@
             IGraphClient client = new TestGraphClient();
             var q = client
                 .From<User>()
-                .WhereIn(a => a.FirstName, new string[] {"test1", "test2"})
+                .WhereIn(a => a.FirstName, new[] {"test1", "test2"})
                 .Out<Login>()
                 .BuildGremlinQuery();
-            Assert.AreEqual("g.V().has('label','User').has('FirstName',within('test1','test2')).out().has('label','Login')", q);
+            Assert.AreEqual(
+                "g.V().has('label','User').has('FirstName',within('test1','test2')).out().has('label','Login')", q);
         }
 
         [TestMethod]
@@ -131,79 +112,9 @@
             IGraphClient client = new TestGraphClient();
             var q = client
                 .Add(new User())
-                .AddOut(new Login(),"has")
+                .AddOut(new Login(), "has")
                 .BuildGremlinQuery();
             Assert.AreEqual("g.addV('User').property('Age', 0).addE('has').to(g.addV('Login')).inV()", q);
-        }
-
-        [TestMethod]
-        public void TestWhereWithGremlinProperty()
-        {
-            // Arrange
-            var subject = new TestGraphClient()
-                .From<GremlinPropertyTest>()
-                .Where(a => a.Property == "unit test value");
-
-            // Act
-            var result = subject.BuildGremlinQuery();
-
-            // Assert
-            Assert.AreEqual("g.V().has('label','GremlinPropertyTest').has('gp', 'unit test value')", result);
-        }
-        
-        [TestMethod]
-        public void TestSimpleWhere()
-        {
-            IGraphClient client = new TestGraphClient();
-            var q = client
-                .From<User>()
-                .Where(a => a.FirstName =="kalle")
-                .BuildGremlinQuery();
-            Assert.AreEqual("g.V().has('label','User').has('FirstName', 'kalle')",q);
-        }
-
-        [TestMethod]
-        public void TestWhereWithEqual()
-        {
-            IGraphClient client = new TestGraphClient();
-            var q = client
-                .From<User>()
-                .Where(a => a.FirstName.Equals("kalle"))
-                .BuildGremlinQuery();
-            Assert.AreEqual("g.V().has('label','User').has('FirstName', 'kalle')",q);
-        }
-
-        [TestMethod]
-        public void TestWhereWithNotEqual()
-        {
-            IGraphClient client = new TestGraphClient();
-            var q = client
-                .From<User>()
-                .Where(a => a.FirstName != "kalle")
-                .BuildGremlinQuery();
-            Assert.AreEqual("g.V().has('label','User').has('FirstName', neq('kalle'))",q);
-        }
-
-        [TestMethod]
-        public void TestWhereWithMultipleConditions()
-        {
-            IGraphClient client = new TestGraphClient();
-            var q = client
-                .From<User>()
-                .Where(a => a.FirstName.Equals("kalle") && a.LastName=="Sven" && a.Age>3)
-                .BuildGremlinQuery();
-            Assert.AreEqual("g.V().has('label','User').has('FirstName', 'kalle').has('LastName', 'Sven').has('Age', gt(3))",q);
-        }
-
-        [TestMethod]
-        public void TestWhereWithOrStatement()
-        {
-            IGraphClient client = new TestGraphClient();
-            var q = client
-                .From<User>()
-                .Where(a => a.FirstName.Equals("kalle") && (a.LastName == "Sven" || a.Age > 3))
-                .BuildGremlinQuery();
-            Assert.AreEqual("g.V().has('label','User').has('FirstName', 'kalle').has('LastName', 'Sven').has('Age', gt(3))", q);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Gremlin.Linq.Tests
+﻿namespace Gremlin.Linq.Tests.Models
 {
     public class Login : Vertex
     {

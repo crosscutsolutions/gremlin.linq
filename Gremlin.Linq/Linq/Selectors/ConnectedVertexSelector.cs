@@ -11,7 +11,8 @@
 
         public override string BuildGremlinQuery()
         {
-            return ParentSelector.BuildGremlinQuery() + $".out('{_relation}').hasLabel('{typeof(T).Name}')";
+            var vertexLabel = typeof(T).GetLabel();
+            return ParentSelector.BuildGremlinQuery() + $".out('{_relation}').hasLabel('{vertexLabel}')";
         }
     }
 }

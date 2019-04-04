@@ -69,7 +69,8 @@ namespace Gremlin.Linq.Linq.Selectors.ExpressionHandlers
             var callExpression = (MethodCallExpression) _binaryExpression.Right;
             var values = callExpression.Arguments.Select(a=>(Evaluator.PartialEval(a) as ConstantExpression).Value).ToArray();
             var value = callExpression.Method.Invoke(null, values);
-            return $".has('{(_binaryExpression.Left as MemberExpression)?.Member.Name}', '{value}')";
+            var label = (_binaryExpression.Left as MemberExpression)?.Member.GetType().GetLabel();
+            return $".has('{label}', '{value}')";
         }
     }
 }

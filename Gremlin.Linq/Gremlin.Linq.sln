@@ -10,7 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{610DF2F3-DAEE-4FF1-B01E-FD55D70EC2F4}"
 	ProjectSection(SolutionItems) = preProject
 		..\.gitignore = ..\.gitignore
-		..\readme.md = ..\readme.md
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gremlin.Linq.TestApp", "..\Gremlin.Linq.TestApp\Gremlin.Linq.TestApp.csproj", "{B863B8E3-F568-4F7F-9067-1A41929E023B}"

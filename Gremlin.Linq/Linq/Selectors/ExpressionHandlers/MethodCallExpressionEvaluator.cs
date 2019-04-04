@@ -14,9 +14,10 @@
         }
         public string Evaluate()
         {
-            var memberName = (_expression.Object as MemberExpression)?.Member.Name;
+            var member = ((MemberExpression) _expression.Object)?.Member;
+            var propertyName = member.GetGremlinPropertyName();
             var value = _expression.Arguments.First();
-            return $".has('{memberName}', '{value.ToString().Replace("\"","")}')";
+            return $".has('{propertyName}', '{value.ToString().Replace("\"","")}')";
         }
     }
 }

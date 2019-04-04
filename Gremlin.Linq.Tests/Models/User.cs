@@ -1,7 +1,7 @@
-﻿namespace Gremlin.Linq.Entities
-{
-    using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
+namespace Gremlin.Linq.Tests.Models
+{
     public class User : Vertex
     {
         public string FirstName { get; set; }

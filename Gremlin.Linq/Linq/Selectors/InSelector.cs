@@ -2,13 +2,19 @@
 {
     public class InSelector<T> : Selector<T>
     {
-        public InSelector(IGraphClient graphClient) : base(graphClient)
+        private readonly string _edgeLabel;
+
+        public InSelector(IGraphClient graphClient, string edgeLabel) : base(graphClient)
         {
+            _edgeLabel = edgeLabel;
         }
 
         public override string BuildGremlinQuery()
         {
-            return ParentSelector.BuildGremlinQuery() + $".in().has('label','{typeof(T).Name}')";
+            var vertexLabel = typeof(T).GetLabel();
+            if (!string.IsNullOrEmpty(_edgeLabel))
+                return ParentSelector.BuildGremlinQuery() + $".in('{_edgeLabel}').has('label','{vertexLabel}')";
+            return ParentSelector.BuildGremlinQuery() + $".in().has('label','{vertexLabel}')";
         }
     }
 }
